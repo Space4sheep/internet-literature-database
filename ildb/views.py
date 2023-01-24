@@ -1,3 +1,6 @@
 from django.shortcuts import render
 
-# Create your views here.
+
+def index(request):
+    """Main page of ildb"""
+    return render(request, 'ildb/index.html')
