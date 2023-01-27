@@ -32,7 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     # My own apps
-    'ildb',
+    'main',
 
     # Default apps
     'django.contrib.admin',

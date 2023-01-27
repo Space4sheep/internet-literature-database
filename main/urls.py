@@ -2,7 +2,7 @@ from django.urls import path
 
 from . import views
 
-app_name = 'ildb'
+app_name = 'main'
 urlpatterns = [
     # Main page
     path('', views.index, name='index'),
