@@ -14,10 +14,11 @@ class Bookshelf(models.Model):
 
 
 class Book(models.Model):
+    bookshelf = models.ForeignKey(Bookshelf, on_delete=models.CASCADE)
     title = models.CharField(max_length=100)
     author = models.CharField(max_length=50, null=True)
-    url = models.CharField(max_length=50, null=True)
+    date_added = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.title, self.author
+        return f"{self.title}, {self.author}"
 
