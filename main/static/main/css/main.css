@@ -2,13 +2,18 @@ body {
     background: ##FFFFF0;
 }
 
+main {
+    float: right;
+}
+
 
 aside {
+    position: fixed;
     float: left;
     background: #355E3B;
     width: 16%;
     padding: 2.5%;
-    height: 100vh;
+    height: 100vmax;
     color: #C1E1C1;
 }
 

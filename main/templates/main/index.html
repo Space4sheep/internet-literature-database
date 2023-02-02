@@ -3,5 +3,10 @@
 {% block title %}Головна сторінка{% endblock %}
 
 {% block content %}
-    <h1>Тіло головної сторінки</h1>
+    {% for el in books %}
+        <div class="book">
+            <h3>{{ el.title }}</h3>
+            <p>{{ el.author }}</p>
+        </div>
+    {% endfor %}
 {% endblock %}

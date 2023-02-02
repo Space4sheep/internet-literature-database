@@ -1,9 +1,11 @@
 from django.shortcuts import render
+from .models import Book
 
 
 def index(request):
     """Main page of main"""
-    return render(request, 'main/index.html')
+    books = Book.objects.all()
+    return render(request, 'main/index.html', {'books': books})
 
 
 def results(request):
@@ -14,3 +16,9 @@ def results(request):
 def about(request):
     """Сторінка про нас"""
     return render(request, 'main/about.html')
+
+
+def library(request):
+    """Вивід бібліотеки"""
+    books = Book.objects.all()
+    return render(request, 'main/index.html', {'books': books})

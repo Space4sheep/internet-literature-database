@@ -17,14 +17,10 @@
         <span class="logo"><img src="{% static 'main/img/icons8-repository-100.png' %}" alt="logo">LDb</span>
         <h3>Навігація</h3>
         <ul>
-            <a href="/"><li><i class="bi bi-house-door"></i></i>Головна</li></a>
-            <a href="about/"><li><i class="bi bi-book"></i>Про нас</li></a>
+            <a href="{% url 'home' %}"><li><i class="bi bi-house-door"></i></i> Головна</li></a>
+            <a href="{% url 'about' %}"><li><i class="bi bi-book"></i> Про нас</li></a>
         </ul>
-        <style>
-          a {
-          text-decoration: none;
-          }
-        </style>
+        <style>a {text-decoration: none;}</style>
     </aside>
     <main>
         {% block content %}
