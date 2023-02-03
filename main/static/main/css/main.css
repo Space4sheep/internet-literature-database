@@ -4,6 +4,9 @@ body {
 
 main {
     float: right;
+    margin-top: 100px;
+    text-align: center;
+    width: 75%;
 }
 
 

@@ -1,0 +1,17 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Книжкові полиці{% endblock %}
+
+{% block content %}
+<h2><p>Книжкові полиці:</p></h2>
+    <ul>
+        {% for bookshelf in bookshelves %}
+        <li>
+            <a href="{% url 'bookshelf' bookshelf.id %}">{{ bookshelf }}</a>
+        </li>
+        {% empty %}
+          <li>Ви ще не створили жодної книжкової полиці</li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'new_bookshelf' %}">Створити нову полицю</a>
+{% endblock %}

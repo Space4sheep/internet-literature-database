@@ -18,7 +18,7 @@ class Book(models.Model):
     bookshelf = models.ForeignKey(Bookshelf, on_delete=models.CASCADE, null=True)
     title = models.CharField('Назва', max_length=100)
     author = models.CharField('Автор', max_length=50, null=True)
-    url = models.CharField('Посилання', max_length=50)
+    url = models.CharField('Посилання', max_length=100, null=True)
     date_added = models.DateTimeField(auto_now_add=True, null=True)
 
     class Meta:

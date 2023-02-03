@@ -1,0 +1,14 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Додати книгу{% endblock %}
+
+{% block content %}
+  <p>Додати книгу на полицю: </p>
+
+  <form action="{% url 'add_book' bookshelf.id %}" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button name="submit">Підтвердити</button>
+  </form>
+
+{% endblock %}

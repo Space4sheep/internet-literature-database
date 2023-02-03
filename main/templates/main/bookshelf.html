@@ -1,0 +1,21 @@
+{% extends 'main/base.html' %}
+
+{% block title %}{% endblock %}
+
+{% block content %}
+<h2><p>Книжкова полиця: {{ bookshelf }}</p></h2>
+    <p>Додані книги: </p>
+    <p>
+        <a href="{% url 'add_book' bookshelf.id %}">Додати книгу на полицю</a>
+    </p>
+    <ul>
+        {% for book in books %}
+        <li>
+            <h3>{{ book.title }}</h3>
+            <h4>{{ book.author }}</h4>
+        </li>
+        {% empty %}
+          <li>Ви ще не додали жодної книги на цю полицю</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
