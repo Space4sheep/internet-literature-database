@@ -17,11 +17,18 @@
         <span class="logo"><img src="{% static 'main/img/icons8-repository-100.png' %}" alt="logo">LDb</span>
         <h3>Навігація</h3>
         <ul>
-            <a href="{% url 'home' %}"><li><i class="bi bi-house-door"></i></i> Головна</li></a>
-            <a href="{% url 'about' %}"><li><i class="bi bi-book"></i> Про нас</li></a>
-            <a href="{% url 'library' %}"><li>Бібліотека</li></a>
-            <a href="{% url 'bookshelves' %}"><li>Книжкові полиці</li></a>
+            <a href="{% url 'main:home' %}"><li><i class="bi bi-house-door"></i></i> Головна</li></a>
+            <a href="{% url 'main:about' %}"><li><i class="bi bi-book"></i> Про нас</li></a>
+            <a href="{% url 'main:library' %}"><li>Бібліотека</li></a>
+            <a href="{% url 'main:bookshelves' %}"><li>Книжкові полиці</li></a>
         </ul>
+        <p>
+            {% if user.is_authenticated %}
+              Привіт, {{ user.username }}.
+            {% else %}
+              <a href="{% url 'login' %}">Увійти в особистий кабінет</a>
+            {% endif %}
+        </p>
         <style>a {text-decoration: none;}</style>
     </aside>
     <main>
