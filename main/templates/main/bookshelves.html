@@ -7,11 +7,11 @@
     <ul>
         {% for bookshelf in bookshelves %}
         <li>
-            <a href="{% url 'bookshelf' bookshelf.id %}">{{ bookshelf }}</a>
+            <a href="{% url 'main:bookshelf' bookshelf.id %}">{{ bookshelf }}</a>
         </li>
         {% empty %}
           <li>Ви ще не створили жодної книжкової полиці</li>
         {% endfor %}
     </ul>
-    <a href="{% url 'new_bookshelf' %}">Створити нову полицю</a>
+    <a href="{% url 'main:new_bookshelf' %}">Створити нову полицю</a>
 {% endblock %}

@@ -6,7 +6,7 @@
 <h2><p>Книжкова полиця: {{ bookshelf }}</p></h2>
     <p>Додані книги: </p>
     <p>
-        <a href="{% url 'add_book' bookshelf.id %}">Додати книгу на полицю</a>
+        <a href="{% url 'main:add_book' bookshelf.id %}">Додати книгу на полицю</a>
     </p>
     <ul>
         {% for book in books %}
