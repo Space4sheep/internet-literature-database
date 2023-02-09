@@ -4,9 +4,13 @@
 
 {% block content %}
     {% for el in books %}
+    <blockquote>
         <div class="book">
+            <a href="{% url 'main:book' el.id %}">
             <h3>{{ el.title }}</h3>
             <p>{{ el.author }}</p>
+            </a>
         </div>
+    </blockquote>
     {% endfor %}
 {% endblock %}

@@ -14,3 +14,8 @@ class BookForm(forms.ModelForm):
         model = Book
         fields = ['title', 'author']
 
+
+class SelectBookshelfForm(forms.Form):
+    select_bookshelf = forms.ModelChoiceField(queryset=Bookshelf.objects.all(), label='Полиця')
+
+

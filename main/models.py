@@ -15,7 +15,7 @@ class Bookshelf(models.Model):
 
 
 class Book(models.Model):
-    bookshelf = models.ForeignKey(Bookshelf, on_delete=models.CASCADE, null=True)
+    bookshelf = models.ManyToManyField(Bookshelf)
     title = models.CharField('Назва', max_length=100)
     author = models.CharField('Автор', max_length=50, null=True)
     url = models.CharField('Посилання', max_length=100, null=True)
