@@ -15,7 +15,13 @@ class BookForm(forms.ModelForm):
         fields = ['title', 'author']
 
 
-class SelectBookshelfForm(forms.Form):
-    select_bookshelf = forms.ModelChoiceField(queryset=Bookshelf.objects.all(), label='Полиця')
+class SelectBookshelfForm(forms.ModelForm):
+    class Meta:
+        model = Book
+
+        #bookshelf = Bookshelf.objects.all()
+        #select_bookshelf = forms.CharField(widget=forms.Select(choices=bookshelf))
+        fields = ['bookshelf']
+        #select_bookshelf = forms.ModelChoiceField(queryset=Bookshelf.objects.all(), label='Полиця')
 
 

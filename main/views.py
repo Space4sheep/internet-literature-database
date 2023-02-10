@@ -25,9 +25,10 @@ def book(request, book_id):
     if request.method != 'POST':
         form = SelectBookshelfForm()
     else:
-        form = SelectBookshelfForm(request.POST)
+        form = SelectBookshelfForm(request.POST, instance=book)
         if form.is_valid():
-            pass
+            form.save()
+            return redirect('main:bookshelves')
     return render(request, 'main/book.html', {'form': form, 'book': book})
 
 
