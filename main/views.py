@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from .models import Book, Bookshelf
 from .forms import BookshelfForm, BookForm, SelectBookshelfForm
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 
 
 def index(request):
@@ -20,7 +21,8 @@ def about(request):
     return render(request, 'main/about.html')
 
 
-def book(request, book_id):
+def add_book_to_bookshelf(request, book_id):
+    """Додавання конктретної книги на конкретну полицю"""
     book = Book.objects.get(id=book_id)
     if request.method != 'POST':
         form = SelectBookshelfForm()
@@ -34,9 +36,25 @@ def book(request, book_id):
 
 @login_required
 def bookshelf(request, bookshelf_id):
+    """Сторінка конкретної полиці"""
     bookshelf = Bookshelf.objects.get(id=bookshelf_id)
     books = bookshelf.book_set.order_by('-date_added')
     return render(request, 'main/bookshelf.html', {'bookshelf': bookshelf, 'books': books})
+
+
+def delete_bookshelf(request, bookshelf_id):
+    """Видалити полицю"""
+    bookshelf = Bookshelf.objects.get(pk=bookshelf_id)
+    bookshelf.delete()
+    return redirect('main:bookshelves')
+
+
+def delete_book_from_bookshelf(request, book_id, bookshelf_id):
+    """Прибрати книгу з полиці"""
+    book = Book.objects.get(pk=book_id)
+    bookshelf = Bookshelf.objects.get(pk=bookshelf_id)
+    book.bookshelf.remove(bookshelf)
+    return redirect('main:bookshelves')
 
 
 @login_required
@@ -53,11 +71,12 @@ def new_bookshelf(request):
         form = BookshelfForm(data=request.POST)
         if form.is_valid():
             form.save()
-            return redirect('bookshelves')
+            return redirect('main:bookshelves')
     return render(request, 'main/new_bookshelf.html', {'form': form})
 
 
 def add_book(request, bookshelf_id):
+    """Переробити для додавання рецензій"""
     bookshelf = Bookshelf.objects.get(id=bookshelf_id)
     if request.method != 'POST':
         form = BookForm()
@@ -69,6 +88,18 @@ def add_book(request, bookshelf_id):
             new_book.save()
             return redirect('main:bookshelf', bookshelf_id=bookshelf_id)
     return render(request, 'main/add_book.html', {"bookshelf": bookshelf, 'form': form})
+
+
+def search_books(request):
+    if request.method != 'POST':
+
+        return render(request, 'main/search_books.html', {})
+    else:
+        searched = request.POST['searched']
+        print(searched)
+        #searched = 'searched' in request.POST and request.POST['searched']
+        books = Book.objects.filter(Q(author__iregex=searched) | Q(title__iregex=searched))
+        return render(request, 'main/search_books.html', {'searched': searched, 'books': books})
 
 
 
