@@ -4,10 +4,35 @@
 
 
 {% block content %}
-    <h3>{{ book }}</h3>
+    <center>
+    <div class="card mb-3" style="max-width: 540px;">
+      <div class="row g-0">
+        <div class="col-md-4">
+          <img src="{{ book.url_image }}" class="img-fluid rounded-start" alt="...">
+        </div>
+        <div class="col-md-8">
+          <div class="card-body">
+            <h5 class="card-title">{{ book }}</h5>
+            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <form action="{% url 'main:book' book.id %}" method="post">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit">Підтвердти</button>
     </form>
+
+    <select class="form-select" aria-label="Default select example">
+      <option selected>Open this select menu</option>
+      <option value="1">One</option>
+      <option value="2">Two</option>
+      <option value="3">Three</option>
+    </select>
+
+    </center>
+
 {% endblock %}

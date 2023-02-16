@@ -3,18 +3,16 @@
 {% block title %}Результати пошуку{% endblock %}
 
 {% block content %}
-    <form method=POST action="{% url 'main:search_books' %}">
-        {% csrf_token %}
-        <input type="search" placeholder="Шукати книжки в бібліотеці" name="searched" aria-label="Search">
-        <button type="submit">Пошук</button>
-    </form>
+    <center>
     {% if searched %}
-    <h1>Ви шукаєте {{ searched }}</h1>
+    <h1>Ви шукаєте: «{{ searched }}»</h1>
     <br/>
     {% for book in books %}
+        <img src="{{ book.url_image }}" alt="Ops">
         <h3><a href="{% url 'main:book' book.id %}">{{ book }}</a></h3><br/>
     {% endfor %}
     {% else %}
         <h1>Агов, ти не вказав що я маю шукати...</h1>
     {% endif %}
+    </center>
 {% endblock %}

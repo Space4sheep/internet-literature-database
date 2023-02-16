@@ -2,7 +2,7 @@ import sqlite3
 
 import pandas as pd
 
-books = pd.read_csv('StarylevLib.csv')
+books = pd.read_csv('fiction.csv')
 
 conn = sqlite3.connect('db.sqlite3')
 #c = conn.cursor()

@@ -3,6 +3,7 @@
 {% block title %}{% endblock %}
 
 {% block content %}
+<center>
 <h2><p>Книжкова полиця: {{ bookshelf }}</p></h2>
     <p>Додані книги: </p>
     <p>
@@ -11,6 +12,7 @@
     <ul>
         {% for book in books %}
         <li>
+            <img src="{{ book.url_image }}" alt="Ops">
             <a href="{% url 'main:book' book.id %}"><h3>{{ book.title }}</h3></a>
             <h4>{{ book.author }}</h4>
             <a href="{% url 'main:delete_book_from_bookshelf' book.id bookshelf.id %}">Прибрати книгу</a>
@@ -19,4 +21,5 @@
           <li>Ви ще не додали жодної книги на цю полицю</li>
         {% endfor %}
     </ul>
+</center>
 {% endblock %}
