@@ -3,16 +3,27 @@
 {% block title %}Результати пошуку{% endblock %}
 
 {% block content %}
-    <center>
     {% if searched %}
     <h1>Ви шукаєте: «{{ searched }}»</h1>
     <br/>
+        <div class="row row-cols-1 row-cols-md-6 g-4">
     {% for book in books %}
-        <img src="{{ book.url_image }}" alt="Ops">
-        <h3><a href="{% url 'main:book' book.id %}">{{ book }}</a></h3><br/>
+
+
+        <div class="card">
+          <img src="{{ book.url_image }}" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">{{ book.title }}</h5>
+            <p class="card-text">{{ book.author }}</p>
+            <a href="{% url 'main:book' book.id %}" class="stretched-link"></a>
+          </div>
+        </div>
+
+
     {% endfor %}
+            </div>
     {% else %}
         <h1>Агов, ти не вказав що я маю шукати...</h1>
     {% endif %}
-    </center>
+
 {% endblock %}

@@ -15,12 +15,11 @@
     {% include 'main/navbar.html' %}
     <br/>
 
+    <center>
     {% block content %}
-      {% for bookshelf in bookshelves %}
-        <li><a href="{% url 'main:bookshelf' bookshelf.id %}">{{ bookshelf }}</a></li>
-      {% endfor %}
 
     {% endblock %}
+    </center>
 
     <h1></h1>
 

@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
-from .models import Book, Bookshelf
+from .models import Book, Bookshelf, Rating
 from .forms import BookshelfForm, BookForm, SelectBookshelfForm
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
+from django.http import HttpResponse, HttpRequest
 
 
 def index(request):
@@ -19,6 +20,13 @@ def library(request):
 def about(request):
     """Сторінка про нас"""
     return render(request, 'main/about.html')
+
+
+def rate(request: HttpRequest, book_id: int, rating: int) -> HttpResponse:
+    book = Book.objects.get(id=book_id)
+    Rating.objects.filter(book=book, user=request.user).delete()
+    book.rating_set.create(user=request.user, rating=rating)
+    return index(request)
 
 
 def add_book_to_bookshelf(request, book_id):
@@ -38,7 +46,7 @@ def add_book_to_bookshelf(request, book_id):
 def bookshelf(request, bookshelf_id):
     """Сторінка конкретної полиці"""
     bookshelf = Bookshelf.objects.get(id=bookshelf_id)
-    books = bookshelf.book_set.order_by('-date_added')
+    books = bookshelf.book_set.order_by('-id')
     return render(request, 'main/bookshelf.html', {'bookshelf': bookshelf, 'books': books})
 
 
@@ -54,13 +62,14 @@ def delete_book_from_bookshelf(request, book_id, bookshelf_id):
     book = Book.objects.get(pk=book_id)
     bookshelf = Bookshelf.objects.get(pk=bookshelf_id)
     book.bookshelf.remove(bookshelf)
-    return redirect('main:bookshelves')
+    return redirect('main:bookshelf', bookshelf_id)
 
 
 @login_required
 def bookshelves(request):
     """Вивід всії полиць"""
-    bookshelves = Bookshelf.objects.order_by('date_added')
+    # Відображаємо лише полиці власника і сортуємо за датою
+    bookshelves = Bookshelf.objects.filter(owner=request.user).order_by('date_added')
     return render(request, 'main/bookshelves.html', {'bookshelves': bookshelves})
 
 
@@ -70,7 +79,9 @@ def new_bookshelf(request):
     else:
         form = BookshelfForm(data=request.POST)
         if form.is_valid():
-            form.save()
+            new_bookshelf = form.save(commit=False)
+            new_bookshelf.owner = request.user
+            new_bookshelf.save()
             return redirect('main:bookshelves')
     return render(request, 'main/new_bookshelf.html', {'form': form})
 
@@ -90,15 +101,17 @@ def add_book(request, bookshelf_id):
     return render(request, 'main/add_book.html', {"bookshelf": bookshelf, 'form': form})
 
 
-def search_books(request):
+def search_books(request: HttpRequest)-> HttpResponse:
     if request.method != 'POST':
 
         return render(request, 'main/search_books.html', {})
     else:
         searched = request.POST['searched']
         print(searched)
-        #searched = 'searched' in request.POST and request.POST['searched']
         books = Book.objects.filter(Q(author__iregex=searched) | Q(title__iregex=searched))
+        for book in books:
+            rating = Rating.objects.filter(book=book, user=request.user).first()
+            book.user_rating = rating.rating if rating else 0
         return render(request, 'main/search_books.html', {'searched': searched, 'books': books})
 
 

@@ -10,6 +10,7 @@ urlpatterns = [
     path('library/', views.library, name='library'),
     path('bookshelves/', views.bookshelves, name='bookshelves'),
     path('bookshelf/<int:bookshelf_id>/', views.bookshelf, name='bookshelf'),
+    path('rate/<int:post_id>/<int:rating>/', views.rate),
     path('new_bookshelf/', views.new_bookshelf, name='new_bookshelf'),
     path('book/<int:book_id>/', views.add_book_to_bookshelf, name='book'),
     path('delete_bookshelf/<int:bookshelf_id>/', views.delete_bookshelf, name='delete_bookshelf'),
