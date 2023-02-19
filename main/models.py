@@ -26,7 +26,7 @@ class Book(models.Model):
     url_image = models.CharField('Посилання на зображення', max_length=250, null=True)
 
     def average_rating(self) -> float:
-        return Rating.objects.filter(book=self).aggregate(Avg('rating'))['rating_avg'] or 0
+        return Rating.objects.filter(book=self).aggregate(Avg("rating"))["rating__avg"] or 0
 
     class Meta:
         verbose_name = 'Книга'

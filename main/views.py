@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Book, Bookshelf, Rating
 from .forms import BookshelfForm, BookForm, SelectBookshelfForm
 from django.contrib.auth.decorators import login_required
@@ -31,13 +31,18 @@ def rate(request: HttpRequest, book_id: int, rating: int) -> HttpResponse:
 
 def add_book_to_bookshelf(request, book_id):
     """Додавання конктретної книги на конкретну полицю"""
-    book = Book.objects.get(id=book_id)
+    book = get_object_or_404(Book, pk=book_id)
     if request.method != 'POST':
-        form = SelectBookshelfForm()
+        form = SelectBookshelfForm(instance=book, owner=request.user)
     else:
-        form = SelectBookshelfForm(request.POST, instance=book)
+        form = SelectBookshelfForm(request.POST, instance=book, owner=request.user)
+
         if form.is_valid():
-            form.save()
+
+            book = form.save(commit=False)
+            book.save()
+            form.save_m2m()
+
             return redirect('main:bookshelves')
     return render(request, 'main/book.html', {'form': form, 'book': book})
 
@@ -101,13 +106,11 @@ def add_book(request, bookshelf_id):
     return render(request, 'main/add_book.html', {"bookshelf": bookshelf, 'form': form})
 
 
-def search_books(request: HttpRequest)-> HttpResponse:
+def search_books(request: HttpRequest) -> HttpResponse:
     if request.method != 'POST':
-
         return render(request, 'main/search_books.html', {})
     else:
         searched = request.POST['searched']
-        print(searched)
         books = Book.objects.filter(Q(author__iregex=searched) | Q(title__iregex=searched))
         for book in books:
             rating = Rating.objects.filter(book=book, user=request.user).first()

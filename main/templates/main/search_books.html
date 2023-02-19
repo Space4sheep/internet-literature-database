@@ -4,26 +4,83 @@
 
 {% block content %}
     {% if searched %}
-    <h1>Ви шукаєте: «{{ searched }}»</h1>
-    <br/>
-        <div class="row row-cols-1 row-cols-md-6 g-4">
-    {% for book in books %}
+    <h1>Ви шукаєте: «{{ searched }}»</h1><br/>
+      <div class="row row-cols-1 row-cols-md-6 g-4">
 
+      {% for book in books %}
+        <style>
+        .rating-list li {
+          float: right;
+          color: #ddd;
+          padding: 10px 5px;
+        }
 
+        .rating-list li:hover,
+        .rating-list li:hover ~ li {
+          color: orange;
+        }
+
+        .rating-list {
+          display: inline-block;
+          list-style: none;
+        }
+        .checked {
+            color: orange;
+        }
+      </style>
         <div class="card">
-          <img src="{{ book.url_image }}" class="card-img-top" alt="...">
+          <a href="{% url 'main:book' book.id %}"><img src="{{ book.url_image }}" class="card-img-top" alt="..."></a>
           <div class="card-body">
             <h5 class="card-title">{{ book.title }}</h5>
             <p class="card-text">{{ book.author }}</p>
-            <a href="{% url 'main:book' book.id %}" class="stretched-link"></a>
+
+            <h6 class="card-title">Рейтинг: {{ book.average_rating }} / 10
+                <span class="fa fa-star {% if book.average_rating > 0 %} checked {% endif %}"></span>
+            </h6>
+             <ul class="btn btn-light list-inline rating-list">
+              <li onclick="rate(10, {{ book.id }})">
+                  <i class="fa fa-star {% if book.user_rating > 9 %} checked {% endif %}" title="Rate10"></i></li>
+              <li onclick="rate(9, {{ book.id }})">
+                  <i class="fa fa-star {% if book.user_rating > 8 %} checked {% endif %}" title="Rate 9"></i></li>
+              <li onclick="rate(8, {{ book.id }})">
+                  <i class="fa fa-star {% if book.user_rating > 7 %} checked {% endif %}" title="Rate 8"></i></li>
+              <li onclick="rate(7, {{ book.id }})">
+                  <i class="fa fa-star {% if book.user_rating > 6 %} checked {% endif %}" title="Rate 7"></i></li>
+              <li onclick="rate(6, {{ book.id }})">
+                  <i class="fa fa-star {% if book.user_rating > 5 %} checked {% endif %}" title="Rate 6"></i></li>
+              <li onclick="rate(5, {{ book.id }})">
+                  <i class="fa fa-star {% if book.user_rating > 4 %} checked {% endif %}" title="Rate 5"></i></li>
+              <li onclick="rate(4, {{ book.id }})">
+                  <i class="fa fa-star {% if book.user_rating > 3 %} checked {% endif %}" title="Rate 4"></i></li>
+              <li onclick="rate(3, {{ book.id }})">
+                  <i class="fa fa-star {% if book.user_rating > 2 %} checked {% endif %}" title="Rate 3"></i></li>
+              <li onclick="rate(2, {{ book.id }})">
+                  <i class="fa fa-star {% if book.user_rating > 1 %} checked {% endif %}" title="Rate 2"></i></li>
+              <li onclick="rate(1, {{ book.id }})">
+                  <i class="fa fa-star {% if book.user_rating > 0 %} checked {% endif %}" title="Rate 1"></i></li>
+            </ul>
+
+<!--            <a href="{% url 'main:book' book.id %}" class="stretched-link"></a>-->
           </div>
         </div>
-
 
     {% endfor %}
             </div>
     {% else %}
         <h1>Агов, ти не вказав що я маю шукати...</h1>
     {% endif %}
+
+    <script>
+        const rate = (rating, book_id) => {
+            fetch(`/rate/${book_id}/${rating}/`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(rest => {
+                window.location.reload();
+            })
+        }
+    </script>
 
 {% endblock %}
