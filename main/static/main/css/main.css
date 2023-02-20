@@ -67,3 +67,7 @@ blockquote {
     margin-left: 40px;
     margin-right: 40px;
 }
+
+nav {
+  background-color: yellow;
+}

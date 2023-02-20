@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Book, Bookshelf, Rating
-from .forms import BookshelfForm, BookForm, SelectBookshelfForm
+from .forms import BookshelfForm, BookForm, SelectBookshelfForm, ReviewForm
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.http import HttpResponse, HttpRequest
@@ -29,22 +29,47 @@ def rate(request: HttpRequest, book_id: int, rating: int) -> HttpResponse:
     return index(request)
 
 
-def add_book_to_bookshelf(request, book_id):
-    """Додавання конктретної книги на конкретну полицю"""
+def book_page(request, book_id):
+    """Функція, яка обробляє всі події на сторінці конкретної книги."""
     book = get_object_or_404(Book, pk=book_id)
-    if request.method != 'POST':
-        form = SelectBookshelfForm(instance=book, owner=request.user)
+
+    rating = Rating.objects.filter(book=book, user=request.user).first()
+    book.user_rating = rating.rating if rating else 0
+
+    if request.method == 'POST':
+        if 'bookshelf' in request.POST:
+            bookshelf_form = SelectBookshelfForm(request.POST, instance=book, user=request.user)
+            if bookshelf_form.is_valid():
+                book = bookshelf_form.save(commit=False)
+                book.save()
+                bookshelf_form.save_m2m()
+                return redirect('main:bookshelves')
+            else:
+                review_form = ReviewForm()
+        elif 'text_review' in request.POST:
+            bookshelf_form = SelectBookshelfForm(instance=book, user=request.user)
+            review_form = ReviewForm(request.POST)
+            if review_form.is_valid():
+                print(review_form)
+                review = review_form.save(commit=False)
+                review.book = book
+                review.user = request.user
+                review.save()
+                return redirect('main:book', book_id=book.id)
+        else:
+            bookshelf_form = SelectBookshelfForm(instance=book, user=request.user)
+            review_form = ReviewForm()
     else:
-        form = SelectBookshelfForm(request.POST, instance=book, owner=request.user)
+        bookshelf_form = SelectBookshelfForm(instance=book, user=request.user)
+        review_form = ReviewForm()
 
-        if form.is_valid():
+    context = {
+        'bookshelf_form': bookshelf_form,
+        'book': book,
+        'review_form': review_form
+    }
 
-            book = form.save(commit=False)
-            book.save()
-            form.save_m2m()
-
-            return redirect('main:bookshelves')
-    return render(request, 'main/book.html', {'form': form, 'book': book})
+    return render(request, 'main/book.html', context)
 
 
 @login_required
@@ -74,7 +99,7 @@ def delete_book_from_bookshelf(request, book_id, bookshelf_id):
 def bookshelves(request):
     """Вивід всії полиць"""
     # Відображаємо лише полиці власника і сортуємо за датою
-    bookshelves = Bookshelf.objects.filter(owner=request.user).order_by('date_added')
+    bookshelves = Bookshelf.objects.filter(user=request.user).order_by('date_added')
     return render(request, 'main/bookshelves.html', {'bookshelves': bookshelves})
 
 
@@ -85,7 +110,7 @@ def new_bookshelf(request):
         form = BookshelfForm(data=request.POST)
         if form.is_valid():
             new_bookshelf = form.save(commit=False)
-            new_bookshelf.owner = request.user
+            new_bookshelf.user = request.user
             new_bookshelf.save()
             return redirect('main:bookshelves')
     return render(request, 'main/new_bookshelf.html', {'form': form})
@@ -116,6 +141,4 @@ def search_books(request: HttpRequest) -> HttpResponse:
             rating = Rating.objects.filter(book=book, user=request.user).first()
             book.user_rating = rating.rating if rating else 0
         return render(request, 'main/search_books.html', {'searched': searched, 'books': books})
-
-
 

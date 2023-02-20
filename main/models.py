@@ -7,7 +7,7 @@ class Bookshelf(models.Model):
     """Topics by which the user sorts books in his library."""
     title = models.CharField(max_length=100)
     date_added = models.DateTimeField(auto_now_add=True)
-    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = 'Книжкова полиця'
@@ -43,3 +43,14 @@ class Rating(models.Model):
 
     def __str__(self):
         return f"{self.book.title}: {self.rating}"
+
+
+class Review(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    book = models.ForeignKey('Book', on_delete=models.CASCADE, related_name='reviews')
+    text_review = models.TextField()
+
+    def __str__(self):
+        return self.text_review
+
+

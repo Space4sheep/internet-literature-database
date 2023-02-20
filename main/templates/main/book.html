@@ -20,16 +20,61 @@
     </div>
 
 
+<ul class="btn btn-light list-inline rating-list">
+              <li onclick="rate(10, {{ book.id }})">
+                  <i class="fa fa-star {% if book.user_rating > 9 %} checked {% endif %}" title="Rate10"></i></li>
+                    {{ book_r }}
+              <li onclick="rate(9, {{ book.id }})">
+                  <i class="fa fa-star {% if book.user_rating > 8 %} checked {% endif %}" title="Rate 9"></i></li>
+              <li onclick="rate(8, {{ book.id }})">
+                  <i class="fa fa-star {% if book.user_rating > 7 %} checked {% endif %}" title="Rate 8"></i></li>
+              <li onclick="rate(7, {{ book.id }})">
+                  <i class="fa fa-star {% if book.user_rating > 6 %} checked {% endif %}" title="Rate 7"></i></li>
+              <li onclick="rate(6, {{ book.id }})">
+                  <i class="fa fa-star {% if book.user_rating > 5 %} checked {% endif %}" title="Rate 6"></i></li>
+              <li onclick="rate(5, {{ book.id }})">
+                  <i class="fa fa-star {% if book.user_rating > 4 %} checked {% endif %}" title="Rate 5"></i></li>
+              <li onclick="rate(4, {{ book.id }})">
+                  <i class="fa fa-star {% if book.user_rating > 3 %} checked {% endif %}" title="Rate 4"></i></li>
+              <li onclick="rate(3, {{ book.id }})">
+                  <i class="fa fa-star {% if book.user_rating > 2 %} checked {% endif %}" title="Rate 3"></i></li>
+              <li onclick="rate(2, {{ book.id }})">
+                  <i class="fa fa-star {% if book.user_rating > 1 %} checked {% endif %}" title="Rate 2"></i></li>
+              <li onclick="rate(1, {{ book.id }})">
+                  <i class="fa fa-star {% if book.user_rating > 0 %} checked {% endif %}" title="Rate 1"></i></li>
+            </ul>
+
+
+<script>
+        const rate = (rating, book_id) => {
+            fetch(`/rate/${book_id}/${rating}/`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(rest => {
+                window.location.reload();
+            })
+        }
+    </script>
+
+
 
 <div class="row">
   <div class="col-5">
     <form action="{% url 'main:book' book.id %}" method="POST">
         {% csrf_token %}
-        {{ form.as_p }}
+        {{ bookshelf_form.as_p }}
     <button type="submit" class="btn btn-warning">Підтвердити</button>
     </form>
   </div>
 </div>
 
+
+<form action="{% url 'main:book' book.id %}" method="POST">
+        {% csrf_token %}
+        {{ review_form.as_p }}
+    <button type="submit" class="btn btn-warning">Опублікувати рецензію</button>
+    </form>
 
 {% endblock %}
