@@ -3,6 +3,7 @@
 {% block title %}Книжкові полиці{% endblock %}
 
 {% block content %}
+<center>
 
 <h2>Мої полиці:</h2>
         {% for bookshelf in bookshelves %}
@@ -20,4 +21,5 @@
         {% endfor %}
 
     <a href="{% url 'main:new_bookshelf' %}" class="btn btn-outline-warning" role="button" >Створити нову полицю</a>
+    </center>
 {% endblock %}

@@ -21,6 +21,7 @@ class Book(models.Model):
     bookshelf = models.ManyToManyField(Bookshelf)
     title = models.CharField('Назва', max_length=100)
     author = models.CharField('Автор', max_length=100, null=True)
+    description = models.TextField('Опис')
     genre = models.CharField('Жанр', max_length=50)
     url_book = models.CharField('Посилання на книгу', max_length=200, null=True)
     url_image = models.CharField('Посилання на зображення', max_length=250, null=True)
@@ -49,6 +50,7 @@ class Review(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     book = models.ForeignKey('Book', on_delete=models.CASCADE, related_name='reviews')
     text_review = models.TextField()
+    date_added = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.text_review

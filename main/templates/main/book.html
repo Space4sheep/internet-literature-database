@@ -2,50 +2,108 @@
 
 {% block title %}{% endblock %}
 
-
 {% block content %}
-    <div class="card mb-3" style="max-width: 540px;">
-      <div class="row g-0">
-        <div class="col-md-4">
-          <img src="{{ book.url_image }}" class="img-fluid rounded-start" alt="...">
-        </div>
-        <div class="col-md-8">
-          <div class="card-body">
-            <h5 class="card-title">{{ book }}</h5>
-            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-          </div>
-        </div>
-      </div>
+<center>
+    <h1 style="position: relative;">«{{ book.title }}»</h1>
+    <h4>{{ book.author }}</h4><br/>
+</center>
+<table>
+
+    <tr >
+        <td width="2%"></td>
+        <td width="55%">
+            <table>
+                <tr >
+                    <td>
+                        <img src="{{ book.url_image }}" style="width: 220px;">
+
+                    </td>
+                    <td width="2%"></td>
+                    <td>
+
+
+                        <h5 style="font-weight: lighter;">{{ book.description }}</h5><br/><br/>
+                    </td>
+                </tr>
+            </table>
+            <table>
+                <tr>
+                    <td>
+                        <br/>
+
+
+
+                        </td>
+                    <td width="25%"></td>
+                    <td>
+
+
+
+                    </td>
+                </tr>
+                </table>
+        </td>
+        <td width="2%"></td>
+        <td width="40%" >
+            <center>
+
+                <form action="{% url 'main:book' book.id %}" method="POST">
+                {% csrf_token %}
+                {{ bookshelf_form.as_p }}
+                <button type="submit" class="btn btn-warning">Підтвердити</button>
+            </form>
+                <br/><br/>
+
+                <h5>Рейтинг: {{ book.average_rating }} / 10</h5>
+                            {% include 'main/rating.html' %}
+
+
+
+
+
+                <br/>
+
+
+
+
+
+
+
+                </center>
+        </td>
+        <td width="2%"></td>
+        </tr>
+</table>
+<center>
+    <hr>
+
+
+                {% for review in book.reviews.all %}
+                    <div class="card border-dark mb-3" style="max-width: 50rem;">
+  <div class="card-header">Автор: {{ review.user }}       </div>
+  <div class="card-body">
+    <p class="card-text">{{ review.text_review }}</p>
+  </div>
+                         <div class="card-footer">
+      <small class="text-muted">Опубліковано: {{ review.date_added }}</small>
     </div>
+</div>
+{% endfor %}
 
 
-<ul class="btn btn-light list-inline rating-list">
-              <li onclick="rate(10, {{ book.id }})">
-                  <i class="fa fa-star {% if book.user_rating > 9 %} checked {% endif %}" title="Rate10"></i></li>
-                    {{ book_r }}
-              <li onclick="rate(9, {{ book.id }})">
-                  <i class="fa fa-star {% if book.user_rating > 8 %} checked {% endif %}" title="Rate 9"></i></li>
-              <li onclick="rate(8, {{ book.id }})">
-                  <i class="fa fa-star {% if book.user_rating > 7 %} checked {% endif %}" title="Rate 8"></i></li>
-              <li onclick="rate(7, {{ book.id }})">
-                  <i class="fa fa-star {% if book.user_rating > 6 %} checked {% endif %}" title="Rate 7"></i></li>
-              <li onclick="rate(6, {{ book.id }})">
-                  <i class="fa fa-star {% if book.user_rating > 5 %} checked {% endif %}" title="Rate 6"></i></li>
-              <li onclick="rate(5, {{ book.id }})">
-                  <i class="fa fa-star {% if book.user_rating > 4 %} checked {% endif %}" title="Rate 5"></i></li>
-              <li onclick="rate(4, {{ book.id }})">
-                  <i class="fa fa-star {% if book.user_rating > 3 %} checked {% endif %}" title="Rate 4"></i></li>
-              <li onclick="rate(3, {{ book.id }})">
-                  <i class="fa fa-star {% if book.user_rating > 2 %} checked {% endif %}" title="Rate 3"></i></li>
-              <li onclick="rate(2, {{ book.id }})">
-                  <i class="fa fa-star {% if book.user_rating > 1 %} checked {% endif %}" title="Rate 2"></i></li>
-              <li onclick="rate(1, {{ book.id }})">
-                  <i class="fa fa-star {% if book.user_rating > 0 %} checked {% endif %}" title="Rate 1"></i></li>
-            </ul>
+    <div class="container-sm">
+
+            <form action="{% url 'main:book' book.id %}" method="POST" style="max-width: 50%;">
+                {% csrf_token %}
+                {{ review_form.as_p }}
+                <button type="submit" class="btn btn-warning">Опублікувати рецензію</button>
+            </form>
+    </div>
+    </center>
 
 
-<script>
+
+    <script>
         const rate = (rating, book_id) => {
             fetch(`/rate/${book_id}/${rating}/`, {
                 method: 'GET',
@@ -57,24 +115,5 @@
             })
         }
     </script>
-
-
-
-<div class="row">
-  <div class="col-5">
-    <form action="{% url 'main:book' book.id %}" method="POST">
-        {% csrf_token %}
-        {{ bookshelf_form.as_p }}
-    <button type="submit" class="btn btn-warning">Підтвердити</button>
-    </form>
-  </div>
-</div>
-
-
-<form action="{% url 'main:book' book.id %}" method="POST">
-        {% csrf_token %}
-        {{ review_form.as_p }}
-    <button type="submit" class="btn btn-warning">Опублікувати рецензію</button>
-    </form>
 
 {% endblock %}
