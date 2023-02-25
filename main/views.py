@@ -40,10 +40,11 @@ def book_page(request, book_id):
         if 'bookshelf' in request.POST:
             bookshelf_form = SelectBookshelfForm(request.POST, instance=book, user=request.user)
             if bookshelf_form.is_valid():
+                bookshelf_id = bookshelf_form.cleaned_data['bookshelf'].values_list('id', flat=True).first()
                 book = bookshelf_form.save(commit=False)
                 book.save()
                 bookshelf_form.save_m2m()
-                return redirect('main:bookshelves')
+                return redirect('main:bookshelf', bookshelf_id=bookshelf_id)
             else:
                 review_form = ReviewForm()
         elif 'text_review' in request.POST:
@@ -80,6 +81,7 @@ def bookshelf(request, bookshelf_id):
     return render(request, 'main/bookshelf.html', {'bookshelf': bookshelf, 'books': books})
 
 
+@login_required
 def delete_bookshelf(request, bookshelf_id):
     """Видалити полицю"""
     bookshelf = Bookshelf.objects.get(pk=bookshelf_id)
@@ -87,6 +89,7 @@ def delete_bookshelf(request, bookshelf_id):
     return redirect('main:bookshelves')
 
 
+@login_required
 def delete_book_from_bookshelf(request, book_id, bookshelf_id):
     """Прибрати книгу з полиці"""
     book = Book.objects.get(pk=book_id)
@@ -103,6 +106,7 @@ def bookshelves(request):
     return render(request, 'main/bookshelves.html', {'bookshelves': bookshelves})
 
 
+@login_required
 def new_bookshelf(request):
     if request.method != 'POST':
         form = BookshelfForm()
