@@ -1,0 +1,46 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Головна сторінка{% endblock %}
+
+{% block content %}
+
+        <center><h1>{{ article.title }}</h1></center><br/><br/>
+        <table>
+            <tr>
+                <td width="15%"></td>
+                <td width="70%">
+                    <center>
+                        {% if article.image %}
+                            <img src="{{ MEDIA_URL }}{{ article.image.url }}" width="1080" height="500">
+                        {% endif %}
+                        <br/>
+                        <hr>
+                            <h3 style="font-weight: lighter;">
+                                {{ article.text }}
+                            </h3>
+                            <br/>
+                            <hr>
+
+                        {% for book in article.books.all %}
+
+                        <h3>{{ book.title }}</h3>
+                        <br>
+                        <h5>{{ book.author }}</h5>
+                        <br/>
+                        <a href="{% url 'main:book' book.id %}">
+                            <img src="{{ book.url_image }}" width="350">
+                        </a>
+                        <br/>
+                        <h4 style="font-weight: lighter;">
+                            {{ book.description }}
+                        </h4>
+                        <hr>
+                        <br/>
+                        {% endfor %}
+                    </center>
+                </td>
+                <td width="15%"></td>
+            </tr>
+        </table>
+
+{% endblock %}

@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Book, Bookshelf, Rating
+from .models import Book, Bookshelf, Rating, Article
 from .forms import BookshelfForm, BookForm, SelectBookshelfForm, ReviewForm
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
@@ -8,7 +8,14 @@ from django.http import HttpResponse, HttpRequest
 
 def index(request):
     """Головна сторінка"""
-    return render(request, 'main/index.html')
+    articles = Article.objects.all()
+    return render(request, 'main/index.html', {'articles': articles})
+
+
+def article(request, article_id):
+    """Сторінка кожної окремої статті"""
+    article = get_object_or_404(Article, pk=article_id)
+    return render(request, 'main/article.html', {'article': article})
 
 
 def library(request):

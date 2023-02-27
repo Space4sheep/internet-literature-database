@@ -3,6 +3,7 @@
 {% block title %}Реєстрація{% endblock %}
 
 {% block content %}
+<center>
   {% if form.errors %}
     <p>Невірнй логін або пароль. Спробуйте ще раз.</p>
   {% endif %}
@@ -14,5 +15,5 @@
     <button name="submit">Зареєструватись</button>
     <input type="hidden" name="next" value="{% url 'main:home' %}" />
   </form>
-
+</center>
 {% endblock %}

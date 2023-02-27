@@ -3,16 +3,25 @@
 {% block title %}Увійти{% endblock %}
 
 {% block content %}
+<center>
   {% if form.errors %}
     <p>Невірнй логін або пароль. Спробуйте ще раз.</p>
   {% endif %}
-
+  <br/><br/><br/>
+  <div class="w-25 p-3">
   <form method="post" action="{% url 'users:login' %}">
     {% csrf_token %}
-    {{ form.as_p }}
+    <div class="mb-3">
+      <input type="text" class="form-control" name="username" placeholder="Ім'я користувача">
+    </div>
+    <div class="mb-3">
+      <input type="password" class="form-control" name="password" placeholder="Пароль">
+    </div>
 
-    <button name="submit">Увійти</button>
+
+    <button name="submit" class="btn btn-primary">Увійти</button>
     <input type="hidden" name="next" value="{% url 'main:home' %}" />
   </form>
-
+  </div>
+</center>
 {% endblock %}

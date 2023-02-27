@@ -18,12 +18,12 @@ class Bookshelf(models.Model):
 
 
 class Book(models.Model):
-    bookshelf = models.ManyToManyField(Bookshelf)
+    bookshelf = models.ManyToManyField(Bookshelf, blank=True)
     title = models.CharField('Назва', max_length=100)
     author = models.CharField('Автор', max_length=100, null=True)
     description = models.TextField('Опис')
     genre = models.CharField('Жанр', max_length=50)
-    url_book = models.CharField('Посилання на книгу', max_length=200, null=True)
+    url_book = models.CharField('Посилання на книгу', max_length=200, blank=True, null=True)
     url_image = models.CharField('Посилання на зображення', max_length=250, null=True)
 
     def average_rating(self) -> float:
@@ -54,5 +54,25 @@ class Review(models.Model):
 
     def __str__(self):
         return self.text_review
+
+
+class ArticleCategory(models.Model):
+    name = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.name
+
+
+class Article(models.Model):
+    title = models.CharField('Заголовок', max_length=250)
+    categories = models.ManyToManyField(ArticleCategory, related_name='articles')
+    text = models.TextField("Текст статті")
+    image = models.ImageField(upload_to='article_images/', blank=True)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    books = models.ManyToManyField(Book, related_name='articles')
+    date_added = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.title
 
 
