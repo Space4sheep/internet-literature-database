@@ -1,15 +1,15 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login
-from django.contrib.auth.forms import UserCreationForm
+from .forms import RegisterUserForm
 
 
 def register(request):
     if request.method != 'POST':
         # Показати порожню форму.
-        form = UserCreationForm()
+        form = RegisterUserForm()
     else:
         # Опрацювати заповнену форму.
-        form = UserCreationForm(data=request.POST)
+        form = RegisterUserForm(data=request.POST)
 
         if form.is_valid():
             new_user = form.save()

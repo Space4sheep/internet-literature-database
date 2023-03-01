@@ -7,13 +7,19 @@
   {% if form.errors %}
     <p>Невірнй логін або пароль. Спробуйте ще раз.</p>
   {% endif %}
+  <div class="w-50 p-3">
+  <div class="shadow p-4 mb-5 bg-body rounder">
 
   <form method="post" action="{% url 'users:register' %}">
     {% csrf_token %}
-    {{ form.as_p }}
 
-    <button name="submit">Зареєструватись</button>
+    {{ form.as_p }}
+    <button name="submit" class="btn btn-primary">Зареєструватись</button>
     <input type="hidden" name="next" value="{% url 'main:home' %}" />
   </form>
+  </div>
+  </div>
+  </div>
+
 </center>
 {% endblock %}
