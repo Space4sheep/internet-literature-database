@@ -18,12 +18,6 @@ def article(request, article_id):
     return render(request, 'main/article.html', {'article': article})
 
 
-def library(request):
-    """Вивід всіх книг"""
-    books = Book.objects.all()
-    return render(request, 'main/library.html', {'books': books})
-
-
 def about(request):
     """Сторінка про нас"""
     return render(request, 'main/about.html')

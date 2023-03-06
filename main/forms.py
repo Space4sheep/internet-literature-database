@@ -4,12 +4,14 @@ from .models import Bookshelf, Book, Review
 
 
 class BookshelfForm(forms.ModelForm):
+    """Форма для створення полиці"""
     class Meta:
         model = Bookshelf
         fields = ['title']
 
 
 class BookForm(forms.ModelForm):
+    """Форма для додавання книги до БД"""
     class Meta:
         model = Book
         fields = ['title', 'author']
@@ -37,7 +39,7 @@ class SelectBookshelfForm(forms.ModelForm):
 
 
 class ReviewForm(forms.ModelForm):
-
+    """Форма для додавання рецензій"""
     class Meta:
         model = Review
         fields = ['text_review']
@@ -45,7 +47,6 @@ class ReviewForm(forms.ModelForm):
             'text_review': ''
         }
         widgets = {
-            'text_review': forms.Textarea(attrs={'class': 'form-control', 'rows': 5, 'cols': 40, 'placeholder': 'Ви можете написати тут свою рецензію на цю книгу'})
+            'text_review': forms.Textarea(attrs={'class': 'form-control', 'rows': 5, 'cols': 40,
+                                                 'placeholder': 'Ви можете написати тут свою рецензію на цю книгу'})
         }
-
-
