@@ -6,20 +6,22 @@
 <center>
 
 <h2>Мої полиці:</h2>
-        {% for bookshelf in bookshelves %}
-        <div class="w-75 p-3">
-         <div class="card">
-          <h5 class="card-header">{{ bookshelf }}</h5>
-          <div class="card-body">
-            <a href="{% url 'main:bookshelf' bookshelf.id %}" class="btn btn-primary">Перейти до полиці</a>
-            <a href="{% url 'main:delete_bookshelf' bookshelf.id %}" class="btn btn-danger">Видалити</a>
-          </div>
+    {% for bookshelf in bookshelves %}
+    <div class="w-75 p-3">
+        <div class="card">
+            <h5 class="card-header">{{ bookshelf }}</h5>
+            <div class="card-body">
+                <a href="{% url 'main:bookshelf' bookshelf.id %}" class="btn btn-primary">Перейти до полиці</a>
+                <a href="{% url 'main:delete_bookshelf' bookshelf.id %}" class="btn btn-danger">Видалити</a>
+            </div>
         </div>
-        </div>
-        {% empty %}
-<p>Ви ще не створили жодної книжкової полиці</p>
-        {% endfor %}
+    </div>
+
+    {% empty %}
+        <p>Ви ще не створили жодної книжкової полиці</p>
+    {% endfor %}
 
     <a href="{% url 'main:new_bookshelf' %}" class="btn btn-outline-warning" role="button" >Створити нову полицю</a>
     </center>
+
 {% endblock %}

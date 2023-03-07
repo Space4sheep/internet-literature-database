@@ -3,29 +3,26 @@
 {% block title %}Головна сторінка{% endblock %}
 
 {% block content %}
+
 <center>
     {% for article in articles %}
-
-<div class="w-75 p-3">
-    <div class="card text-center" >
-
-  <div class="card-body">
-    <h4 class="card-title">{{ article.title }}</h4>
-      <a ><p class="card-text"></p></a>
-    <a href="{% url 'main:article' article.id %}" class="btn btn-primary">Перейти</a>
-  </div>
-  <div class="card-footer text-muted">
-    {% for category in article.categories.all  %}
-      {{ category }} /
-      {% endfor %}
-      {{ article.date_added }}
-  </div>
-</div>
+    <div class="w-75 p-3">
+        <div class="card text-center" >
+            <div class="card-body">
+                <h4 class="card-title">{{ article.title }}</h4>
+                <a><p class="card-text"></p></a>
+                <a href="{% url 'main:article' article.id %}" class="btn btn-primary">Перейти</a>
+            </div>
+            <div class="card-footer text-muted">
+                {% for category in article.categories.all  %}
+                {{ category }} /
+                {% endfor %}
+                {{ article.date_added }}
+            </div>
+        </div>
     </div>
-
-
 <br/>
-
     {% endfor %}
     </center>
+
 {% endblock %}

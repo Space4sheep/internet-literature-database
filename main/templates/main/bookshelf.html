@@ -18,21 +18,22 @@
       </thead>
 
       <tbody>
-
-            {% for book in books %}
-            <tr>
+        {% for book in books %}
+        <tr>
           <th scope="row"></th>
             <td><a href="{% url 'main:book' book.id %}" class="btn btn-light" role="button" >{{ book.title }}</a></td>
-          <td>{{ book.author }}</td>
-            <td><a href="{% url 'main:delete_book_from_bookshelf' book.id bookshelf.id %}" class="btn btn-outline-danger" role="button" >Видалити</a></td>
-            </tr>
-                {% endfor %}
-            {% else %}
-      <p>Щоб додати книгу - спочатку знайдіть її через пошук. </p>
-      {% endif %}
+            <td>{{ book.author }}</td>
+            <td><a href="{% url 'main:delete_book_from_bookshelf' book.id bookshelf.id %}"
+                   class="btn btn-outline-danger" role="button" >Видалити</a></td>
+        </tr>
+        {% endfor %}
+
+        {% else %}
+            <p>Щоб додати книгу - спочатку знайдіть її через пошук. </p>
+
+        {% endif %}
 
       </tbody>
     </table>
-
 
 {% endblock %}
