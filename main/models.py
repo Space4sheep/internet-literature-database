@@ -67,6 +67,15 @@ class ArticleCategory(models.Model):
         return self.name
 
 
+class Feedback(models.Model):
+    """Модель для відгуків та пропозицій"""
+    theme = models.CharField('Тема', max_length=250)
+    text = models.TextField('Відгук')
+
+    def __str__(self):
+        return self.theme
+
+
 class Article(models.Model):
     """Модель для створення статей"""
     title = models.CharField('Заголовок', max_length=250)

@@ -19,4 +19,3 @@ def register(request):
 
     # Показати порожню або недійсну форму.
     return render(request, 'registration/register.html', {'form': form})
-

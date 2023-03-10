@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Book, Bookshelf, Rating, Article
-from .forms import BookshelfForm, BookForm, SelectBookshelfForm, ReviewForm
+from .forms import BookshelfForm, BookForm, SelectBookshelfForm, ReviewForm, FeedbackForm
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.http import HttpResponse, HttpRequest
@@ -52,7 +52,6 @@ def book_page(request, book_id):
             bookshelf_form = SelectBookshelfForm(instance=book, user=request.user)
             review_form = ReviewForm(request.POST)
             if review_form.is_valid():
-                print(review_form)
                 review = review_form.save(commit=False)
                 review.book = book
                 review.user = request.user
@@ -119,6 +118,18 @@ def new_bookshelf(request):
             new_bookshelf.save()
             return redirect('main:bookshelves')
     return render(request, 'main/new_bookshelf.html', {'form': form})
+
+
+def feedback(request):
+    """Сторінка з формою для відгуків"""
+    if request.method != 'POST':
+        form = FeedbackForm()
+    else:
+        form = FeedbackForm(data=request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('main:about')
+    return render(request, 'main/feedback.html', {'form': form})
 
 
 def add_book(request, bookshelf_id):

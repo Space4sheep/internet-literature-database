@@ -12,6 +12,7 @@ urlpatterns = [
     path('bookshelves/', views.bookshelves, name='bookshelves'),
     path('bookshelf/<int:bookshelf_id>/', views.bookshelf, name='bookshelf'),
     path('rate/<int:book_id>/<int:rating>/', views.rate),
+    path('feedback/', views.feedback, name='feedback'),
     path('new_bookshelf/', views.new_bookshelf, name='new_bookshelf'),
     path('book/<int:book_id>/', views.book_page, name='book'),
     path('delete_bookshelf/<int:bookshelf_id>/', views.delete_bookshelf, name='delete_bookshelf'),

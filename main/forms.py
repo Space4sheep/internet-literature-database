@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Bookshelf, Book, Review
+from .models import Bookshelf, Book, Review, Feedback
 
 
 class BookshelfForm(forms.ModelForm):
@@ -8,6 +8,12 @@ class BookshelfForm(forms.ModelForm):
     class Meta:
         model = Bookshelf
         fields = ['title']
+
+
+class FeedbackForm(forms.ModelForm):
+    class Meta:
+        model = Feedback
+        fields = ['theme', 'text']
 
 
 class BookForm(forms.ModelForm):
