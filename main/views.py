@@ -100,8 +100,8 @@ def delete_book_from_bookshelf(request, book_id, bookshelf_id):
 
 @login_required
 def bookshelves(request):
-    """Вивід всії полиць"""
-    # Відображаємо лише полиці власника і сортуємо за датою
+    """Вивід всіх полиць"""
+    # Показуємо лише полиці власника і сортуємо за датою
     bookshelves = Bookshelf.objects.filter(user=request.user).order_by('date_added')
     return render(request, 'main/bookshelves.html', {'bookshelves': bookshelves})
 
@@ -157,4 +157,3 @@ def search_books(request: HttpRequest) -> HttpResponse:
             rating = Rating.objects.filter(book=book, user=request.user).first()
             book.user_rating = rating.rating if rating else 0
         return render(request, 'main/search_books.html', {'searched': searched, 'books': books})
-

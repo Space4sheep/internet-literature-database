@@ -1,9 +1,10 @@
+
 body {
-    background: ##FFFFF0;
+    background: #FFFFF0;
 }
 
 login {
-    font-size 100px;
+    font-size: 100px;
 }
 
 main {
@@ -31,7 +32,6 @@ aside img {
 
 aside .logo {
     font-size: 60px;
-    margin-left;
     font-weight: bold;
 }
 
