@@ -362,6 +362,7 @@ fabric.properties
 #  be found at https://github.com/github/gitignore/blob/main/Global/JetBrains.gitignore
 #  and can be added to the global gitignore or merged into this file.  For a more nuclear
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
+.idea/csv-editor.xml
 
 ### Python Patch ###
 # Poetry local configuration file - https://python-poetry.org/docs/configuration/#local-configuration
@@ -385,6 +386,7 @@ pip-selfcheck.json
 ### VisualStudioCode ###
 .vscode/*
 !.vscode/settings.json
+.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
@@ -407,3 +409,6 @@ pip-selfcheck.json
 /.idea/inspectionProfiles/profiles_settings.xml
 /.idea/.gitignore
 /.idea/internet-literature-database.iml
+
+# Just my task list
+Task_list.txt
