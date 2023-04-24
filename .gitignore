@@ -414,3 +414,5 @@ pip-selfcheck.json
 Task_list.txt
 /.idea/lichacha.iml
 /.idea/inspectionProfiles/Project_Default.xml
+/local_data/
+/local_data/django.py

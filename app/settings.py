@@ -1,3 +1,4 @@
+from local_data.django import DJANGO_SECRET_KEY
 """
 Django settings for app project.
 
@@ -20,7 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-^5=t!kcnw8q^e#u!&vn8g189k$iyhi+t%glgkfc076%#v!v*5$'
+SECRET_KEY = DJANGO_SECRET_KEY
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
