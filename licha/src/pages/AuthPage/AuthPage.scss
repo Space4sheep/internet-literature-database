@@ -1,0 +1,62 @@
+@import '../../styles/variables.scss';
+
+.auth-page {
+	height: 100%;
+	padding: 5rem 1rem;
+
+	&__form-wrapper {
+		background-color: $paper_color;
+		max-width: 60rem;
+		width: 100%;
+		margin: 0 auto;
+		padding: 1.5rem;
+		border-radius: 2rem;
+		box-shadow: 0 0 0.8rem rgba(55, 55, 55, 0.3);
+	}
+
+	&__form {
+		width: 80%;
+		margin: 0 auto;
+	}
+
+	&__fieldset {
+		margin-bottom: 1rem;
+		border: 0;
+	}
+
+	&__legend {
+		width: 100%;
+		font-size: 2rem;
+		font-weight: 700;
+		text-align: center;
+		border-bottom: .1rem solid #ccc;
+		padding-bottom: 2rem;
+		margin-bottom: 2rem;
+	}
+
+	&__submit-button {
+		width: 100%;
+		text-align: center;
+		&:disabled {
+			background-color: #424141;
+		}
+	}
+
+	&__note-wrapper {
+		text-align: center;
+		margin-top: 1rem;
+	}
+
+	&__switch-button {
+		color: #000;
+		font-weight: bold;
+		border: 0;
+		text-decoration: underline;
+		padding: 0 ;
+		cursor: pointer;
+	}
+
+	&__form-control{
+		margin: .5rem;
+	}
+}

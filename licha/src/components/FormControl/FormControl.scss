@@ -1,0 +1,22 @@
+@import '../../styles/variables.scss';
+
+.form-control {
+	display: flex;
+	flex-direction: column;
+	&__label{
+		display: inline-block;
+		font-size: 1.4rem;
+		margin-bottom: .5rem;
+	}
+
+	&__field{
+		display: flex;
+		flex-direction: column;
+	}
+
+	&__error {
+		display: block;
+		margin-top: .3rem;
+		color: red;
+	}
+}

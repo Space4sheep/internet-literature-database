@@ -1,0 +1,12 @@
+@import '../../styles/variables.scss';
+
+.button {
+	margin: .25rem;
+	padding: 1rem 2rem;
+	font-size: 1.5rem;
+	background: $paper_color;
+	color: black;
+	&:hover {
+		background: $background_paper
+	}
+}
