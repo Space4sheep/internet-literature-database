@@ -412,3 +412,5 @@ pip-selfcheck.json
 
 # Just my task list
 Task_list.txt
+/.idea/lichacha.iml
+/.idea/inspectionProfiles/Project_Default.xml
