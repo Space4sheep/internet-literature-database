@@ -37,6 +37,9 @@
 	&__submit-button {
 		width: 100%;
 		text-align: center;
+		&:hover {
+			background: $background_paper
+		}
 		&:disabled {
 			background-color: #424141;
 		}
